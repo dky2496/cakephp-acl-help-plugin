@@ -9,27 +9,27 @@ class TreeHelper extends AppHelper {
  	var $helpers = array('Form');
 	var $name = 'Tree';
 	function view($data){
-		echo '<table>';
-		echo '<tr><th>Id</th><th>name</th><th>ARO[create/read/update/delete]</th><th>action</th></tr>';
-		$this->_generate(&$data);
-		echo '</table>';
-		return;
+		$buffer= '<table>';
+		$buffer.= '<tr><th>Id</th><th>name</th><th>ARO[create/read/update/delete]</th><th>action</th></tr>';
+		$buffer.= $this->_generate(&$data);
+		$buffer.= '</table>';
+		return $buffer;
 	}
 	
 	
-	function _generate($data,$indent = -1){
+	function _generate($data,$indent = -1,$buf = null){
 		$indent ++;
 		foreach($data as $each){
-			echo '<tr>';
-			echo '<td>'.$each['Aco']['id'].'</td>';
-			echo  '<td>';
+			$buf.= '<tr>';
+			$buf.= '<td>'.$each['Aco']['id'].'</td>';
+			$buf.=  '<td>';
 			for($i=0; $i<$indent; $i++){
-				echo '- ';
+				$buf.= '- ';
 			}
-			echo $each['Aco']['alias'].'</td>';
+			$buf.= $each['Aco']['alias'].'</td>';
 			
 			
-			echo '<td>';
+			$buf.= '<td>';
 			if(!empty($each['Aro'])){
 				foreach($each['Aro'] as $aro){
 					if($aro['Permission']['_read'] == 1){
@@ -37,29 +37,29 @@ class TreeHelper extends AppHelper {
 					}else{
 						$style = 'color: gray';
 					}
-					echo '<p style="'.$style.'">';
-					echo $aro['model'].'.'.$aro['id'].'['.$aro['Permission']['_create'].$aro['Permission']['_read'].$aro['Permission']['_update'].$aro['Permission']['_delete'].']';
-					echo '</p>';
+					$buf.= '<p style="'.$style.'">';
+					$buf.= $aro['model'].'.'.$aro['id'].'['.$aro['Permission']['_create'].$aro['Permission']['_read'].$aro['Permission']['_update'].$aro['Permission']['_delete'].']';
+					$buf.= '</p>';
 				}
 				
 			}
-			echo '</td>';
+			$buf.= '</td>';
 			
-			echo '<td>';
-			echo $this->Form->input('actions',array('empty'=>true,'name'=>'data[action]['.$each['Aco']['id'].']','label'=>false));
-			echo '</td>';
+			$buf.= '<td>';
+			$buf.= $this->Form->input('actions',array('empty'=>true,'name'=>'data[action]['.$each['Aco']['id'].']','label'=>false));
+			$buf.= '</td>';
 			
 			if(!empty($each['children'])){
-				$this->_generate($each['children'],$indent);
+				$buf.= $this->_generate($each['children'],$indent);
 				
 			}else{
 				
 			}
-			echo '</tr>';
+			$buf.= '</tr>';
 		}
 		
 		
-		return;
+		return $buf;
 	}
 
 }
