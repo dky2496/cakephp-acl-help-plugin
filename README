@@ -1,3 +1,3 @@
 CakePHP ACL help plugin
 
-access http://(yoursite)/access/home/
+access http://(yoursite)/admin/access/
