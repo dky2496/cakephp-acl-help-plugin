@@ -38,11 +38,11 @@ class AccessController extends AccessAppController {
 /**
  * Do nothing. only shows actions view.
  *
- * @access   public
+ * @access   admin
  * @param    
  */ 
 
-	function index(){
+	function admin_index(){
 	
 	}
 
@@ -54,7 +54,7 @@ class AccessController extends AccessAppController {
  * @param    
  */ 
 	
-	function list_groups(){
+	function admin_list_groups(){
 		$aro =& $this->Acl->Aro;
 		
 		$params['order'] = array('Group.id'=>'ASC');
@@ -78,7 +78,7 @@ class AccessController extends AccessAppController {
  * @access   public
  * @param    
  */ 
-	function list_aco(){
+	function admin_list_aco(){
 
 		$aco =& $this->Acl->Aco;
 
@@ -131,7 +131,7 @@ class AccessController extends AccessAppController {
  * @param    
  */ 
 
-	function build_acl() {
+	function admin_build_acl() {
 		if (!Configure::read('debug')) {
 			return $this->_stop();
 		}
