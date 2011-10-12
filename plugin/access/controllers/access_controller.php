@@ -30,8 +30,6 @@ class AccessController extends AccessAppController {
 		
 		$this->Auth->actionPath = 'controllers/';
 		
-		// 
-		//$this->Auth->allow('*');
 	}
 
 
